@@ -5,13 +5,26 @@ from dotenv import load_dotenv
 load_dotenv()
 import os
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY')
+USER = os.getenv('USER')
+MYSQL_PASS = os.getenv('MYSQL_PASS')
+Host = os.getenv('Host')
+Port = os.getenv('Port')
+
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', '2f42-2603-6011-65f0-a140-e565-1256-dfd3-fb63.ngrok-free.app','https://api.ebay.com/commerce/notification/v1/public_key/e1acce9c-7082-42dd-9181-8aeab21eb47d']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'b2cd-2603-6011-65f0-a140-3c4f-b624-ba0e-159e.ngrok-free.app','https://api.ebay.com/commerce/notification/v1/public_key/e1acce9c-7082-42dd-9181-8aeab21eb47d']
+
+
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', 'us-east-1')
+
 
 
 CACHES = {
@@ -67,8 +80,12 @@ WSGI_APPLICATION = 'tcg_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'card data',
+        'USER': USER,
+        'PASSWORD': MYSQL_PASS,
+        'HOST': Host,
+        'PORT': Port,
     }
 }
 
@@ -91,28 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-        },
-        'file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': 'errors.log',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console', 'file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}
+
 
 
 # Internationalization
